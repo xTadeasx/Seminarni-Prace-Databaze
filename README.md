@@ -1,0 +1,1 @@
+# Seminarni-Prace-Databaze
