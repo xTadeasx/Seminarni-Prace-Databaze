@@ -1,7 +1,7 @@
 # Seminarni-Prace-Databaze
 Odkaz na dbdiagram: https://dbdiagram.io/d/Seminarni-prace-Databaze-67d7d2d475d75cc84453dbe3
-1 zadání:
-  popis problémové domény, stanovení poslání a účelu DB, stanovení dílčích cílů a podporovaných úkolů:
+  1 zadání:
+    popis problémové domény, stanovení poslání a účelu DB, stanovení dílčích cílů a podporovaných úkolů:
   
       Popis problémové domény
         -Moderní e-commerce prostředí vyžaduje efektivní a dobře strukturované databázové systémy pro správu produktů, objednávek, zákazníků a dalších klíčových prvků online          obchodu. Tato databáze je navržena pro e-shop specializující se na prodej sběratelských Pop figurek. Hlavním cílem je zajistit spolehlivou evidenci produktů,                 objednávek, plateb a dalších funkcionalit nezbytných pro provoz e-shopu.
