@@ -41,3 +41,13 @@ Odkaz na dbdiagram: https://dbdiagram.io/d/Seminarni-prace-Databaze-67d7d2d475d7
           -Evidovat různé možnosti dopravy a jejich ceny.
           -Uchovávat dodací lhůty jednotlivých způsobů dopravy.
 2. analýza:
+   
+   -ER model (obrázek) se všemi atributy a specifikací integritních omezení, popis jednotlivých entit a jejich atributů (včetně jednotek, kde to dává smysl)
+   
+   -diagramy užití a popisy případů užití pro jednotlivé uživatelské pohledy
+   
+   -identifikace hlavních typů dotazů
+
+
+    ![image](https://github.com/user-attachments/assets/9eb2be8e-5f0c-4c05-89d5-2b857239c460)
+
