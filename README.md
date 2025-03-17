@@ -1,6 +1,8 @@
 # Seminarni-Prace-Databaze
 Odkaz na dbdiagram: https://dbdiagram.io/d/Seminarni-prace-Databaze-67d7d2d475d75cc84453dbe3
 
+Odkaz na figmu: https://www.figma.com/design/c4ZMBzCSiJDCQAB7xZcShg/Untitled?node-id=0-1&t=3kehXoc3RLCtdnTn-1
+  
   1 zadání:
     popis problémové domény, stanovení poslání a účelu DB, stanovení dílčích cílů a podporovaných úkolů:
   
