@@ -51,5 +51,6 @@ Odkaz na figmu: https://www.figma.com/design/c4ZMBzCSiJDCQAB7xZcShg/Untitled?nod
    -identifikace hlavních typů dotazů
 
 
-    ![image](https://github.com/user-attachments/assets/9eb2be8e-5f0c-4c05-89d5-2b857239c460)
+    ![image](https://github.com/user-attachments/assets/ad0cb374-2d6d-46fd-8599-838f7fb0a707)
+
 
