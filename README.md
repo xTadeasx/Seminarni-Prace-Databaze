@@ -52,5 +52,55 @@ Odkaz na figmu: https://www.figma.com/design/c4ZMBzCSiJDCQAB7xZcShg/Untitled?nod
 
 
     ![image](https://github.com/user-attachments/assets/ad0cb374-2d6d-46fd-8599-838f7fb0a707)
+3. Transformace ER modelu do tabulek
 
+   ![image](https://github.com/user-attachments/assets/b6b1b094-6d56-496d-9c95-5e9d06439bb8)
+  přikrestli k "zakaznik--email" a "slevovy_kupon--kod" Unique.
 
+  1- Integritní omezení na logické úrovni
+
+    Referenční integrita
+    
+      Tabulka objednavka_polozka obsahuje sloupec produkt_id, který odkazuje na tabulku produkt, což zabraňuje přidání položky objednávky pro neexistující produkt.
+      
+      Sloupec objednavka_id v tabulce objednavka_polozka slouží jako cizí klíč do tabulky objednavka, což zajišťuje vazbu každé položky k platné objednávce.
+      
+    Unikátnost a povinná pole
+    
+      Sloupec email v tabulce zakaznik je unikátní, čímž se eliminuje možnost duplicitních registrací.
+      
+      Sloupec kod v tabulce slevovy_kupony je rovněž unikátní, což zamezuje chybám při uplatňování slev.
+      
+    Validace datových vazeb
+    
+      Sloupec hodnoceni v tabulce recenze obsahuje hodnoty v rozmezí 1-5, čímž se zajišťuje smysluplnost hodnocení.
+      
+      Sloupec metoda_plateni v tabulce zaplaceni je definován jako ENUM (Kartou, PayPal, Převod), což omezuje možnosti platby na stanovené varianty.
+    
+  2- Integritní omezení na fyzické úrovni
+
+    Primární a cizí klíče
+    
+      Každá tabulka obsahuje primární klíč (_id), který zajišťuje jednoznačnou identifikaci každého záznamu.
+      
+      Cizí klíče zajišťují integritu vztahů mezi tabulkami (např. produkt_id v tabulce sklad).
+    
+    Indexy pro optimalizaci vyhledávání
+    
+      Sloupec email v tabulce zakaznik je indexován pro rychlejší vyhledávání uživatelů.
+      
+      Sloupec produkt_id v tabulce objednavka_polozka je indexován pro optimalizaci dotazů na objednávkové položky.
+      
+    Triggery
+    
+      Automatická aktualizace dostupnosti produktu ve skladu po vytvoření objednávky.
+  
+  3- Speciální konstrukty
+  
+    ENUM pro statusy a metody platby
+    
+      Sloupec status v tabulce objednavka obsahuje ENUM hodnoty (Cekani, Poslano, Doruceno, Zruseno), čímž se omezuje množina možných stavů objednávky.
+    
+    Datumová omezení
+    
+      Sloupce datum_od a datum_do v tabulce slevovy_kupony určují platnost kuponu a musí splňovat podmínku, že datum_do je větší než datum_od.
