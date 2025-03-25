@@ -1,0 +1,31 @@
+-- Naplnění tabulek testovacími daty
+INSERT INTO "kategorie" ("jmeno", "popis") VALUES 
+('Elektronika', 'Různá elektronická zařízení'), 
+('Knihy', 'Tištěné i elektronické knihy'), 
+('Oblečení', 'Moderní oblečení pro muže i ženy');
+
+INSERT INTO "produkt" ("jmeno", "popis", "cena", "kategorie_id", "na_prodej_od") VALUES 
+('Smartphone X', 'Nejnovější smartphone', 999.99, 1, '2024-01-01'),
+('Kniha Python', 'Programování v Pythonu', 29.99, 2, '2024-02-15'),
+('Tepláková souprava', 'Komfortní souprava na doma', 49.99, 3, '2024-03-10');
+
+INSERT INTO "zakaznik" ("jmeno", "prijmeni", "email", "heslo_hash", "ucet_zalozen") VALUES 
+('Jan', 'Novák', 'jan.novak@email.cz', 'hash123', '2023-12-01'),
+('Petr', 'Svoboda', 'petr.svoboda@email.cz', 'hash456', '2024-01-15');
+
+INSERT INTO "slevovy_kupony" ("kod", "sleva_procento", "datum_od", "datum_do", "aktivni") VALUES 
+('SLEVA10', 10.00, '2024-01-01', '2024-12-31', TRUE),
+('SLEVA20', 20.00, '2024-03-01', '2024-06-30', TRUE);
+
+INSERT INTO "doprava" ("jmeno", "cena", "dodaci_lhuta") VALUES 
+('DHL Express', 5.99, 2),
+('Česká pošta', 3.99, 5);
+
+INSERT INTO "objednavka" ("zakaznik_id", "objednavka_vznik", "status", "celkovy_cena") VALUES 
+(1, '2024-03-20', 'Cekani', 999.99),
+(2, '2024-03-22', 'Poslano', 79.98);
+
+INSERT INTO "objednavka_polozka" ("objednavka_id", "produkt_id", "zakoupeny_pocet", "cena") VALUES 
+(1, 1, 1, 999.99),
+(2, 2, 2, 59.98),
+(2, 3, 1, 49.99);
