@@ -1,3 +1,7 @@
+-- Create the database
+CREATE DATABASE "e-shop";
+\c "e-shop";
+
 -- Create ENUM types for PostgreSQL
 CREATE TYPE status_enum AS ENUM ('Cekani', 'Poslano', 'Doruceno', 'Zruseno');
 CREATE TYPE payment_enum AS ENUM ('Kartou', 'PayPal', 'Prevod');
