@@ -1,0 +1,104 @@
+SELECT obsahující spojení více než dvou tabulek a klauzule GROUP BY a HAVING,
+  -- Výběr dat o zákaznících, kteří utratili více než 5000
+  SELECT 
+      -- Zákaznický identifikátor
+      z.zakaznik_id,
+      -- Jméno zákazníka
+      z.jmeno,
+      -- Příjmení zákazníka
+      z.prijmeni,
+  SUM(op.zakoupeny_pocet * op.cena) AS celkova_utrata -- Výpočet celkové utraty zákazníka: počet zakoupených kusů * cena každého produktu
+  FROM objednavka o -- Tabulka objednávek
+  JOIN objednavka_polozka op ON o.objednavka_id = op.objednavka_id -- Spojení s tabulkou položek objednávek podle ID objednávky
+  JOIN produkt p ON op.produkt_id = p.produkt_id -- Spojení s tabulkou produktů podle ID produktu
+  JOIN zakaznik z ON o.zakaznik_id = z.zakaznik_id -- Spojení s tabulkou zákazníků podle ID zákazníka
+  GROUP BY z.zakaznik_id, z.jmeno, z.prijmeni -- Skupinování podle ID, jména a příjmení zákazníka
+  HAVING SUM(op.zakoupeny_pocet * op.cena) > 5000 -- Podmínka, aby se zobrazili pouze zákazníci s utratou větší než 5000
+  ORDER BY celkova_utrata DESC; -- Seřazení podle celkové utraty zákazníka od nejvyšší po nejnižší
+
+  
+  NEBO
+  
+  -- Výběr dat o produktech s průměrným hodnocením vyšším než 4 a minimálně 3 recenzemi
+  SELECT 
+      -- ID produktu
+      p.produkt_id,
+      -- Název produktu
+      p.jmeno AS produkt,
+      -- Počet recenzí daného produktu
+      COUNT(r.recenze_id) AS pocet_recenzi,
+      -- Průměrné hodnocení produktu 
+      AVG(r.hodnoceni) AS prumerne_hodnoceni
+  FROM recenze r -- Tabulka recenzí
+  JOIN produkt p ON r.produkt_id = p.produkt_id -- Spojení s tabulkou produktů podle ID produktu
+  JOIN zakaznik z ON r.zakaznik_id = z.zakaznik_id -- Spojení s tabulkou zákazníků podle ID zákazníka
+  GROUP BY p.produkt_id, p.jmeno -- Skupinování podle ID a názvu produktu
+  HAVING AVG(r.hodnoceni) > 4 AND COUNT(r.recenze_id) >= 3 -- Podmínky: průměrné hodnocení větší než 4 a minimálně 3 recenze
+  ORDER BY prumerne_hodnoceni DESC; -- Seřazení podle průměrného hodnocení produktu od nejvyššího po nejnižší
+
+
+
+SELECT obsahující vztažený poddotaz,
+  -- Výběr produktů, jejichž cena je vyšší než průměrná cena všech produktů
+  SELECT 
+      -- ID produktu
+      p.produkt_id,
+      -- Název produktu
+      p.jmeno AS produkt,
+      -- Cena produktu
+      p.cena
+  FROM produkt p -- Tabulka produktů
+  WHERE p.cena > ( -- Podmínka, že cena produktu musí být vyšší než průměrná cena všech produktů
+        SELECT AVG(cena) -- Poddotaz pro výpočet průměrné ceny všech produktů
+        FROM produkt -- Průměrná cena všech produktů v tabulce
+  );
+
+  
+  NEBO
+  
+  -- Výběr produktů, jejichž cena je vyšší než minimální cena v jejich kategorii
+  SELECT 
+      -- ID produktu
+      p.produkt_id,
+      -- Název produktu
+      p.jmeno AS produkt,
+      -- Cena produktu
+      p.cena,
+      -- ID kategorie produktu
+      p.kategorie_id
+  FROM produkt p -- Tabulka produktů
+  WHERE p.cena > ( -- Podmínka, že cena produktu musí být vyšší než minimální cena v jeho kategorii
+        SELECT MIN(cena) -- Poddotaz pro výpočet minimální ceny produktů v dané kategorii
+        FROM produkt -- Ze všech produktů v tabulce
+        WHERE kategorie_id = p.kategorie_id -- Filtruje produkty podle stejné kategorie jako aktuální produkt
+  );
+
+
+Příkaz pro změnu struktury databáze (např. přidání NOT NULL sloupce do neprázdné tabulky, změna cizího klíče, vytvoření netriviálního pohledu)
+  -- Přidání sloupce telefon s možností NULL
+  ALTER TABLE zakaznik -- Určí tabulku s kterou pracujeme a co sní uděláme
+  ADD COLUMN telefon VARCHAR(20); -- přida sloupec telefon
+  
+  -- Aktualizace sloupce, aby měl všechny existující řádky hodnotu
+  UPDATE zakaznik -- Určí tabulku s kteoru pracujeme a co sní uděláme
+  SET telefon = 'Nezadáno' -- Dá všude hodnotu Nezadáno
+  WHERE telefon IS NULL; -- Dá hodnotu Nezadáno jen tam kde je NULL
+  
+  -- Nastavení sloupce telefon jako NOT NULL
+  ALTER TABLE zakaznik -- Určí tabulku s kterou pracujeme a co sní udeláme
+  ALTER COLUMN telefon SET NOT NULL; -- Změní sloupec telefon tak aby tam nemohlo být NULL 
+
+  NEBO
+
+  -- Odstranění existujícího cizího klíče
+  ALTER TABLE objednavka -- určí tabulku s kterou pracujeme a co sní uděláme
+  DROP CONSTRAINT doprava_id; -- Odstraníme cizí klíč 'doprava_id' na tabulce 'objednavka'
+  
+
+  -- Přidání cizího klíče na sloupec zamestnanec_id v tabulce objednavka
+  -- Tento cizí klíč bude odkazovat na sloupec zamestnanec_id v tabulce zamestnanec
+  ALTER TABLE objednavka
+  ADD CONSTRAINT objednavka_zamestnanec_id
+  FOREIGN KEY (zamestnanec_id)  -- Sloupec zamestnanec_id v tabulce objednavka
+  REFERENCES zamestnanec (zamestnanec_id)  -- Odkazuje na sloupec zamestnanec_id v tabulce zamestnanec
+  ON DELETE SET NULL;  -- Pokud bude smazán odpovídající záznam v tabulce zamestnanec, hodnota v objednavka.zamestnanec_id se nastaví na NULL
