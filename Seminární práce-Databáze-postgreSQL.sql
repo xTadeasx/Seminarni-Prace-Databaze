@@ -1,6 +1,25 @@
--- Create the database
+-- Drop the database if it exists and create a new one
+DROP DATABASE IF EXISTS "e-shop";
 CREATE DATABASE "e-shop";
 \c "e-shop";
+
+-- Drop all tables if they exist
+DROP TABLE IF EXISTS "sklad" CASCADE;
+DROP TABLE IF EXISTS "seznam_prani" CASCADE;
+DROP TABLE IF EXISTS "recenze" CASCADE;
+DROP TABLE IF EXISTS "zaplaceni" CASCADE;
+DROP TABLE IF EXISTS "objednavka_polozka" CASCADE;
+DROP TABLE IF EXISTS "objednavka" CASCADE;
+DROP TABLE IF EXISTS "doprava" CASCADE;
+DROP TABLE IF EXISTS "slevovy_kupony" CASCADE;
+DROP TABLE IF EXISTS "zakaznik" CASCADE;
+DROP TABLE IF EXISTS "produkt" CASCADE;
+DROP TABLE IF EXISTS "kategorie" CASCADE;
+
+-- Drop ENUM types if they exist
+DROP TYPE IF EXISTS status_enum CASCADE;
+DROP TYPE IF EXISTS payment_enum CASCADE;
+DROP TYPE IF EXISTS payment_status_enum CASCADE;
 
 -- Create ENUM types for PostgreSQL
 CREATE TYPE status_enum AS ENUM ('Cekani', 'Poslano', 'Doruceno', 'Zruseno');
